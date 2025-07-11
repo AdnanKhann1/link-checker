@@ -1,0 +1,27 @@
+name: 🔗 Link Checker using Lychee
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🦀 Install Rust (for Lychee)
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: 📦 Install Lychee
+        run: cargo install lychee
+
+      - name: 🔎 Run Lychee to check links in README.md
+        run: lychee README.md --verbose
